@@ -4,7 +4,8 @@ public class App {
 
         frame = new JFrame("Todolist APP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        frame.setSize(1000, 200); 
-        frame.setLayout(new BorderLayout())
+        frame.setSize(480, 280); 
+        frame.setVisible(true);
+        frame.setLayout(new BorderLayout());
        
 }
