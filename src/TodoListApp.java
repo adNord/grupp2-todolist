@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class TodoListApp {
     private JFrame frame;
+    private JPanel topPanel;
 
     // Constructor
     public TodoListApp() {
@@ -17,7 +18,12 @@ public class TodoListApp {
         
         // Make the frame visible
         frame.setVisible(true);
+
+        topPanel = new JPanel();
+        frame.add(topPanel, BorderLayout.NORTH);
     }
+
+
 
     public static void main(String[] args) {
         // Create an instance of TodoListApp
