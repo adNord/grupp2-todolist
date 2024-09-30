@@ -4,5 +4,7 @@ public class App {
 
         frame = new JFrame("Bank Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        frame.setSize(1000, 200); 
+        frame.setLayout(new BorderLayout())
        
 }
