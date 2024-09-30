@@ -20,8 +20,6 @@ public class TodoListApp {
         frame.setVisible(true);
 
         topPanel = new JPanel();
-        topPanel.setBackground(Color.BLUE);
-        //topPanel.setBounds(20, 20, 100, 100);
         frame.add(topPanel, BorderLayout.NORTH);
     }
 
