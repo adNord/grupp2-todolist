@@ -35,6 +35,11 @@ public class TodoListApp {
         taskBox.add(taskListContainer, BorderLayout.NORTH);
         frame.add(taskBox, BorderLayout.CENTER);
 
+        //**
+        JButton deleteAll = new JButton("delete all");
+        taskBox.add(deleteAll, BorderLayout.SOUTH);        
+        //
+
 
         JButton addTaskButton = new JButton("Add Task");
         topPanel.add(addTaskButton);
@@ -56,14 +61,31 @@ public class TodoListApp {
             //taskPanel.setPreferredSize(new Dimension(380,30));
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
+            JButton deleteButton = new JButton("Delete Task");
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
+            taskPanel.add(deleteButton, BorderLayout.EAST);
+
+            deleteButton.addActionListener(e -> {
+                System.out.println("delete knapptryck");
+                deleteTask(taskPanel);
+            });
+
+
             taskListContainer.add(taskPanel);
             taskListContainer.revalidate();
             taskListContainer.repaint();
             
 
         }
+    }
+
+    private void deleteTask(JPanel taskPanel){
+        taskListContainer.remove(taskPanel);
+        taskListContainer.revalidate();
+        taskListContainer.repaint();
+        // remove taskpanel from tasklistcontainer
+        // uppdatera ui
     }
 
 
