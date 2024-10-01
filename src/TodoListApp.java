@@ -27,8 +27,13 @@ public class TodoListApp {
 
         JButton addTaskButton = new JButton("Add Task");
         topPanel.add(addTaskButton);
-        frame.pack();
+        
 
+        JPanel taskListContainer = new JPanel();
+        taskListContainer.setSize(200, 200);
+        taskListContainer.setBackground(Color.BLUE);
+        frame.add(taskListContainer, BorderLayout.CENTER);
+        frame.pack();
     }
 
 
