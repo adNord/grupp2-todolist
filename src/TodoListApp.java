@@ -60,11 +60,11 @@ public class TodoListApp {
 
             checkBox.addItemListener(e -> {
                 if (checkBox.isSelected()) {
-                    taskLabel.setForeground(Color.LIGHT_GRAY); // Ändra färg om iklickad
-                    taskLabel.setText("<html><strike>" + taskText + "</strike></html>"); // Genomstruken text
+                    taskLabel.setForeground(Color.LIGHT_GRAY); 
+                    taskLabel.setText("<html><strike>" + taskText + "</strike></html>"); 
                 } else {
-                    taskLabel.setForeground(Color.BLACK); // Återställ färg
-                    taskLabel.setText(taskText); // Återställ text
+                    taskLabel.setForeground(Color.BLACK); 
+                    taskLabel.setText(taskText); 
                 }
             });
             taskPanel.add(taskLabel, BorderLayout.CENTER);
