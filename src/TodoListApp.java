@@ -56,6 +56,17 @@ public class TodoListApp {
             //taskPanel.setPreferredSize(new Dimension(380,30));
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
+
+
+            checkBox.addItemListener(e -> {
+                if (checkBox.isSelected()) {
+                    taskLabel.setForeground(Color.LIGHT_GRAY); // Ändra färg om iklickad
+                    taskLabel.setText("<html><strike>" + taskText + "</strike></html>"); // Genomstruken text
+                } else {
+                    taskLabel.setForeground(Color.BLACK); // Återställ färg
+                    taskLabel.setText(taskText); // Återställ text
+                }
+            });
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
             taskListContainer.add(taskPanel);
