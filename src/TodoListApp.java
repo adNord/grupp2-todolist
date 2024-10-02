@@ -18,9 +18,6 @@ public class TodoListApp {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(480, 480);
         frame.setLayout(new BorderLayout());
-        
-        // Make the frame visible
-        
 
         topPanel = new JPanel();
         frame.add(topPanel, BorderLayout.NORTH);
@@ -39,11 +36,11 @@ public class TodoListApp {
         taskBox.add(taskListContainer, BorderLayout.NORTH);
         frame.add(taskBox, BorderLayout.CENTER);
 
-        //**
         JButton deleteAll = new JButton("delete all");
-        taskBox.add(deleteAll, BorderLayout.SOUTH);        
-        //
-
+        taskBox.add(deleteAll, BorderLayout.SOUTH);
+        deleteAll.addActionListener(e -> {
+            deleteAllCheckedTasks(taskListContainer);
+        });
 
         JButton addTaskButton = new JButton("Add Task");
         topPanel.add(addTaskButton);
@@ -51,10 +48,7 @@ public class TodoListApp {
             addTask(inputTaskText.getText());
             inputTaskText.setText("");
         });
-        
 
-       
-        //frame.pack();
         frame.setVisible(true);
     }
 
@@ -75,21 +69,33 @@ public class TodoListApp {
                 deleteTask(taskPanel);
             });
 
-
+            //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
             taskListContainer.add(taskPanel);
             taskListContainer.revalidate();
             taskListContainer.repaint();
-            
-
         }
     }
 
+    //Funktionalitet till deteteButton, tar bort specifik taskPanel
     private void deleteTask(JPanel taskPanel){
         taskListContainer.remove(taskPanel);
         taskListContainer.revalidate();
         taskListContainer.repaint();
-        // remove taskpanel from tasklistcontainer
-        // uppdatera ui
+    }
+
+    //Funktionalitet till deleteAll, tar bort alla markerade taskPanels.
+    private void deleteAllCheckedTasks(JPanel taskListContainer){
+        for (Component component : taskListContainer.getComponents()){
+            if(component instanceof JPanel){
+                JPanel taskPanel = (JPanel) component;
+                JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(1);
+                if (checkBox.isSelected()) {
+                    taskListContainer.remove(taskPanel);
+                }
+            }
+        }
+        taskListContainer.revalidate();
+        taskListContainer.repaint();
     }
 
 
