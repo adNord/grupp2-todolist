@@ -58,24 +58,26 @@ public class TodoListApp {
             JCheckBox checkBox = new JCheckBox();
 
 
-            checkBox.addItemListener(e -> {
-                if (checkBox.isSelected()) {
-                    taskLabel.setForeground(Color.LIGHT_GRAY); 
-                    taskLabel.setText("<html><strike>" + taskText + "</strike></html>"); 
-                } else {
-                    taskLabel.setForeground(Color.BLACK); 
-                    taskLabel.setText(taskText); 
-                }
-            });
+            checkBox.addItemListener(e -> handleCheckBoxChange(checkBox, taskLabel, taskText));
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
             taskListContainer.add(taskPanel);
             taskListContainer.revalidate();
             taskListContainer.repaint();
-            
-
         }
     }
+
+    // **Ny metod: handleCheckBoxChange**
+    private void handleCheckBoxChange(JCheckBox checkBox, JLabel taskLabel, String taskText) {
+        if (checkBox.isSelected()) {
+            taskLabel.setForeground(Color.LIGHT_GRAY);
+            taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
+        } else {
+            taskLabel.setForeground(Color.BLACK);
+            taskLabel.setText(taskText);
+        }
+    }
+
 
 
     public static void main(String[] args) {
