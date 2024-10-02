@@ -25,6 +25,10 @@ public class TodoListApp {
         topPanel = new JPanel();
         frame.add(topPanel, BorderLayout.NORTH);
 
+        ImageIcon appIcon = new ImageIcon("Pictures/AppIcon.png");
+        frame.setIconImage(appIcon.getImage());
+
+
         JTextField inputTaskText = new JTextField(20);
         topPanel.add(inputTaskText);
 
