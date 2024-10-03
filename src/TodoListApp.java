@@ -62,12 +62,10 @@ public class TodoListApp {
             checkBox.addChangeListener(new ChangeListener() {
                 @Override
                 public void stateChanged(ChangeEvent e) {
-                    if (checkBox.isSelected()) {
-                        
+                    if (checkBox.isSelected()) {      
                 taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
-                        taskLabel.setFont(taskLabel.getFont().deriveFont(Font.BOLD)); // Change text to bold
                     } else {
-                        taskLabel.setFont(taskLabel.getFont().deriveFont(Font.PLAIN)); // Change text to normal
+                        taskLabel.setText(taskText);
                     }
                 }
             });
