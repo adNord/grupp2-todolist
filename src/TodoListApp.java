@@ -17,8 +17,8 @@ import javax.swing.BoxLayout;
 
 
 public class TodoListApp {
-    private JFrame frame;
-    private JPanel topPanel;
+    private JFrame frame = new JFrame("Todolist APP");
+    private JPanel topPanel = new JPanel();
     private JPanel taskListContainer = new JPanel();
     private JPanel taskBox = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(taskBox);
@@ -29,21 +29,24 @@ public class TodoListApp {
     }
 
     private void setupGUI() {
-        frame = new JFrame("Todolist APP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(480, 480);
         frame.setLayout(new BorderLayout());
-
-        topPanel = new JPanel();
-        frame.add(topPanel, BorderLayout.NORTH);
-        
         ImageIcon appIcon = new ImageIcon("Pictures/AppIcon.png");
-        frame.setIconImage(appIcon.getImage());
-
+        frame.setIconImage(appIcon.getImage()); //Sätt Ikon för fönstret
+        
+        //Skapar och lägger till textfält och knapp till topPanel
+        JButton addTaskButton = new JButton("Add Task");
         JTextField inputTaskText = new JTextField(20);
         topPanel.add(inputTaskText);
-
-        //Add  KeyListener to JTextField
+        topPanel.add(addTaskButton);
+        
+        addTaskButton.addActionListener(e -> {
+            addTask(inputTaskText.getText());
+            inputTaskText.setText("");
+        });
+        
+        //Lägger till task när man klickar på enter
         inputTaskText.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -53,29 +56,21 @@ public class TodoListApp {
                 }
             }
         });
-
-        taskBox.setLayout(new BorderLayout());
-
+        
+        frame.add(topPanel, BorderLayout.NORTH);
+        
+        //taskBox är förälder till taskListContainer, som i sin tur är förälder till taskPanel(er) som skapas i addTask
         taskListContainer.setLayout(new BoxLayout(taskListContainer, BoxLayout.Y_AXIS));
-
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
+        taskBox.setLayout(new BorderLayout());
         taskBox.add(taskListContainer, BorderLayout.NORTH);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         frame.add(scrollPane, BorderLayout.CENTER);
-
-        JButton deleteAll = new JButton("Delete completed tasks");
-
+        
         //lägger till deleteAll-knappen till frame så att den inte döljs när taskBox blir för stor
+        JButton deleteAll = new JButton("Delete completed tasks");
         frame.add(deleteAll, BorderLayout.SOUTH);
         deleteAll.addActionListener(e -> {
             deleteAllCheckedTasks(taskListContainer);
-        });
-
-        JButton addTaskButton = new JButton("Add Task");
-        topPanel.add(addTaskButton);
-        addTaskButton.addActionListener(e -> {
-            addTask(inputTaskText.getText());
-            inputTaskText.setText("");
         });
 
         frame.setVisible(true);
@@ -113,7 +108,7 @@ public class TodoListApp {
         }
     }
 
-    //Funktionalitet till deteteButton, tar bort specifik taskPanel
+    //Funktionalitet till deleteButton, tar bort specifik taskPanel
     private void deleteTask(JPanel taskPanel){
         taskListContainer.remove(taskPanel);
         taskListContainer.revalidate();
@@ -134,7 +129,6 @@ public class TodoListApp {
         taskListContainer.revalidate();
         taskListContainer.repaint();
     }
-
 
     public static void main(String[] args) {
         // Create an instance of TodoListApp
