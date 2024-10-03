@@ -1,6 +1,9 @@
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class TodoListApp {
     private JFrame frame;
@@ -25,9 +28,19 @@ public class TodoListApp {
         ImageIcon appIcon = new ImageIcon("Pictures/AppIcon.png");
         frame.setIconImage(appIcon.getImage());
 
-
         JTextField inputTaskText = new JTextField(20);
         topPanel.add(inputTaskText);
+
+        //Add  KeyListener to JTextField
+        inputTaskText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    addTask(inputTaskText.getText());
+                    inputTaskText.setText("");
+                }
+            }
+        });
 
         taskBox.setLayout(new BorderLayout());
 
@@ -59,6 +72,16 @@ public class TodoListApp {
             //taskPanel.setPreferredSize(new Dimension(380,30));
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
+            checkBox.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    if (checkBox.isSelected()) {      
+                taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
+                    } else {
+                        taskLabel.setText(taskText);
+                    }
+                }
+            });
             JButton deleteButton = new JButton("Delete Task");
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
