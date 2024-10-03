@@ -29,6 +29,7 @@ public class TodoListApp {
     }
 
     private void setupGUI() {
+        //Funktionalitet och standardstorlek till fönstret
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(480, 480);
         frame.setLayout(new BorderLayout());
