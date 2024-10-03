@@ -10,6 +10,7 @@ public class TodoListApp {
     private JPanel topPanel;
     private JPanel taskListContainer = new JPanel();
     private JPanel taskBox = new JPanel();
+    private JScrollPane scrollPane = new JScrollPane(taskBox);
 
     // Constructor
     public TodoListApp() {
@@ -24,7 +25,7 @@ public class TodoListApp {
 
         topPanel = new JPanel();
         frame.add(topPanel, BorderLayout.NORTH);
-
+        
         ImageIcon appIcon = new ImageIcon("Pictures/AppIcon.png");
         frame.setIconImage(appIcon.getImage());
 
@@ -45,12 +46,16 @@ public class TodoListApp {
         taskBox.setLayout(new BorderLayout());
 
         taskListContainer.setLayout(new BoxLayout(taskListContainer, BoxLayout.Y_AXIS));
-        //taskListContainer.setSize(200, 200);
-        taskBox.add(taskListContainer, BorderLayout.NORTH);
-        frame.add(taskBox, BorderLayout.CENTER);
 
-        JButton deleteAll = new JButton("delete all");
-        taskBox.add(deleteAll, BorderLayout.SOUTH);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        taskBox.add(taskListContainer, BorderLayout.NORTH);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        JButton deleteAll = new JButton("Delete completed tasks");
+
+        //lägger till deleteAll-knappen till frame så att den inte döljs när taskBox blir för stor
+        frame.add(deleteAll, BorderLayout.SOUTH);
         deleteAll.addActionListener(e -> {
             deleteAllCheckedTasks(taskListContainer);
         });
@@ -69,7 +74,6 @@ public class TodoListApp {
         if (!taskText.isEmpty()) {
             JPanel taskPanel = new JPanel();
             taskPanel.setLayout(new BorderLayout());
-            //taskPanel.setPreferredSize(new Dimension(380,30));
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
             checkBox.addChangeListener(new ChangeListener() {
@@ -83,6 +87,7 @@ public class TodoListApp {
                 }
             });
             JButton deleteButton = new JButton("Delete Task");
+            //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
             taskPanel.add(deleteButton, BorderLayout.EAST);
@@ -92,7 +97,6 @@ public class TodoListApp {
                 deleteTask(taskPanel);
             });
 
-            //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
             taskListContainer.add(taskPanel);
             taskListContainer.revalidate();
             taskListContainer.repaint();
