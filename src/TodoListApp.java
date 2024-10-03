@@ -1,9 +1,20 @@
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.BoxLayout;
+
 
 public class TodoListApp {
     private JFrame frame;
@@ -93,7 +104,6 @@ public class TodoListApp {
             taskPanel.add(deleteButton, BorderLayout.EAST);
 
             deleteButton.addActionListener(e -> {
-                System.out.println("delete knapptryck");
                 deleteTask(taskPanel);
             });
 
