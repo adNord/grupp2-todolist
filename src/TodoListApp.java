@@ -83,17 +83,26 @@ public class TodoListApp {
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
             checkBox.addChangeListener(e -> {
-                checkedBox(e, taskPanel, taskLabel, taskText);
+                checkedBox(e, taskPanel, taskLabel);
             });
             JButton deleteButton = new JButton("Delete Task");
+
+            JPanel buttonPanel = new JPanel();
+            JButton editButton = new JButton("Edit Task");
+            buttonPanel.add(editButton);
+            buttonPanel.add(deleteButton);
             
             //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
-            taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
-            taskPanel.add(deleteButton, BorderLayout.EAST);
+            taskPanel.add(taskLabel, BorderLayout.CENTER);
+            taskPanel.add(buttonPanel, BorderLayout.EAST);
 
             deleteButton.addActionListener(e -> {
                 deleteTask(taskPanel);
+            });
+
+            editButton.addActionListener(e -> {
+                editTask(taskPanel, taskLabel);
             });
 
             taskListContainer.add(taskPanel);
@@ -114,7 +123,7 @@ public class TodoListApp {
         for (Component component : taskListContainer.getComponents()){
             if(component instanceof JPanel){
                 JPanel taskPanel = (JPanel) component;
-                JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(1);
+                JCheckBox checkBox = (JCheckBox) taskPanel.getComponent(0);
                 if (checkBox.isSelected()) {
                     taskListContainer.remove(taskPanel);
                 }
@@ -124,8 +133,9 @@ public class TodoListApp {
         taskListContainer.repaint();
     }
     //Funktionalitet för checkBox. Stryker task testen och färgar panelen när man checkar boxen
-    private void checkedBox(ChangeEvent e, JPanel taskPanel, JLabel taskLabel, String taskText) {
+    private void checkedBox(ChangeEvent e, JPanel taskPanel, JLabel taskLabel) {
         JCheckBox checkBox = (JCheckBox) e.getSource();
+        String taskText = taskLabel.getText().replaceAll("<html><strike>|</strike></html>", ""); // Get the current text from the label
         if (checkBox.isSelected()) {
             taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
             taskPanel.setBackground(Color.GREEN);
@@ -134,6 +144,33 @@ public class TodoListApp {
             taskPanel.setBackground(null); 
         }
        
+    }
+
+    private void editTask(JPanel taskJPanel, JLabel taskJLabel) {
+        
+        JTextField editTaskField = new JTextField(taskJLabel.getText(), 20);
+    
+        taskJPanel.remove(taskJLabel);
+        taskJPanel.add(editTaskField, BorderLayout.CENTER); 
+    
+        taskJPanel.revalidate();
+        taskJPanel.repaint();
+    
+        editTaskField.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                   
+                    String newTaskText = editTaskField.getText();
+                    taskJLabel.setText(newTaskText);
+                    taskJPanel.remove(editTaskField); 
+                    taskJPanel.add(taskJLabel, BorderLayout.CENTER); 
+    
+                    taskJPanel.revalidate();
+                    taskJPanel.repaint();
+                }
+            }
+        });
+
     }
 
     public static void main(String[] args) {
