@@ -1,6 +1,9 @@
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class TodoListApp {
     private JFrame frame;
@@ -19,16 +22,26 @@ public class TodoListApp {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(480, 480);
         frame.setLayout(new BorderLayout());
-        
+
         topPanel = new JPanel();
         frame.add(topPanel, BorderLayout.NORTH);
         
         ImageIcon appIcon = new ImageIcon("Pictures/AppIcon.png");
         frame.setIconImage(appIcon.getImage());
-        
-        
+
         JTextField inputTaskText = new JTextField(20);
         topPanel.add(inputTaskText);
+
+        //Add  KeyListener to JTextField
+        inputTaskText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    addTask(inputTaskText.getText());
+                    inputTaskText.setText("");
+                }
+            }
+        });
 
         taskBox.setLayout(new BorderLayout());
 
@@ -39,7 +52,9 @@ public class TodoListApp {
         taskBox.add(taskListContainer, BorderLayout.NORTH);
         frame.add(scrollPane, BorderLayout.CENTER);
 
-        JButton deleteAll = new JButton("delete all");
+        JButton deleteAll = new JButton("Delete completed tasks");
+
+        //lägger till deleteAll-knappen till frame så att den inte döljs när taskBox blir för stor
         frame.add(deleteAll, BorderLayout.SOUTH);
         deleteAll.addActionListener(e -> {
             deleteAllCheckedTasks(taskListContainer);
@@ -49,7 +64,7 @@ public class TodoListApp {
         topPanel.add(addTaskButton);
         addTaskButton.addActionListener(e -> {
             addTask(inputTaskText.getText());
-            //inputTaskText.setText("");
+            inputTaskText.setText("");
         });
 
         frame.setVisible(true);
@@ -59,9 +74,18 @@ public class TodoListApp {
         if (!taskText.isEmpty()) {
             JPanel taskPanel = new JPanel();
             taskPanel.setLayout(new BorderLayout());
-            //taskPanel.setPreferredSize(new Dimension(380,30));
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
+            checkBox.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    if (checkBox.isSelected()) {      
+                taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
+                    } else {
+                        taskLabel.setText(taskText);
+                    }
+                }
+            });
             JButton deleteButton = new JButton("Delete Task");
             //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
             taskPanel.add(taskLabel, BorderLayout.CENTER);
