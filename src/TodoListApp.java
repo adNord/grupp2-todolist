@@ -86,6 +86,7 @@ public class TodoListApp {
                 checkedBox(e, taskPanel, taskLabel, taskText);
             });
             JButton deleteButton = new JButton("Delete Task");
+            
             //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
@@ -122,7 +123,7 @@ public class TodoListApp {
         taskListContainer.revalidate();
         taskListContainer.repaint();
     }
-
+    //Funktionalitet för checkBox. Stryker task testen och färgar panelen när man checkar boxen
     private void checkedBox(ChangeEvent e, JPanel taskPanel, JLabel taskLabel, String taskText) {
         JCheckBox checkBox = (JCheckBox) e.getSource();
         if (checkBox.isSelected()) {
