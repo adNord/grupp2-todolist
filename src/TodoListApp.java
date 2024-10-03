@@ -1,19 +1,18 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.BorderLayout;
-import java.awt.Component;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JCheckBox;
-import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
 import javax.swing.JTextField;
-import javax.swing.BoxLayout;
+import javax.swing.event.ChangeEvent;
 
 
 public class TodoListApp {
@@ -83,17 +82,11 @@ public class TodoListApp {
             taskPanel.setLayout(new BorderLayout());
             JLabel taskLabel = new JLabel(taskText);
             JCheckBox checkBox = new JCheckBox();
-            checkBox.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    if (checkBox.isSelected()) {      
-                taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
-                    } else {
-                        taskLabel.setText(taskText);
-                    }
-                }
+            checkBox.addChangeListener(e -> {
+                checkedBox(e, taskPanel, taskLabel, taskText);
             });
             JButton deleteButton = new JButton("Delete Task");
+            
             //BYT INTE ORDNIG PÅ DESSA (MYCKET VIKTIGT)
             taskPanel.add(taskLabel, BorderLayout.CENTER);
             taskPanel.add(checkBox, BorderLayout.WEST);
@@ -129,6 +122,18 @@ public class TodoListApp {
         }
         taskListContainer.revalidate();
         taskListContainer.repaint();
+    }
+    //Funktionalitet för checkBox. Stryker task testen och färgar panelen när man checkar boxen
+    private void checkedBox(ChangeEvent e, JPanel taskPanel, JLabel taskLabel, String taskText) {
+        JCheckBox checkBox = (JCheckBox) e.getSource();
+        if (checkBox.isSelected()) {
+            taskLabel.setText("<html><strike>" + taskText + "</strike></html>");
+            taskPanel.setBackground(Color.GREEN);
+        } else {
+            taskLabel.setText(taskText);
+            taskPanel.setBackground(null); 
+        }
+       
     }
 
     public static void main(String[] args) {
