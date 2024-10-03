@@ -1,7 +1,10 @@
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 public class TodoListApp {
     private JFrame frame;
     private JPanel topPanel;
@@ -25,9 +28,19 @@ public class TodoListApp {
         ImageIcon appIcon = new ImageIcon("Pictures/AppIcon.png");
         frame.setIconImage(appIcon.getImage());
 
-
         JTextField inputTaskText = new JTextField(20);
         topPanel.add(inputTaskText);
+
+        //Add  KeyListener to JTextField
+        inputTaskText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    addTask(inputTaskText.getText());
+                    inputTaskText.setText("");
+                }
+            }
+        });
 
         taskBox.setLayout(new BorderLayout());
 
